@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace MarkdownTask
 {
-    class Program
+    public class MarkdownProcessor
     {
-        static void Main(string[] args)
-        {
 
-        }
     }
 }
