@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MarkdownProcessor.cs" />
+    <Compile Include="MarkdownProcessor_should.cs" />
+    <Compile Include="ParagraphSplitter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
