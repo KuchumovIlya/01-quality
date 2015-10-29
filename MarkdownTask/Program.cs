@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace MarkdownTask
 {
@@ -10,7 +7,14 @@ namespace MarkdownTask
     {
         static void Main(string[] args)
         {
+            var path = args[0];
 
+            using (var inputFile = File.OpenText(path))
+            {
+                var text = inputFile.ReadToEnd();
+                var markedText = MarkdownProcessor.Markdown(text);
+                Console.WriteLine(markedText);
+            }
         }
     }
 }

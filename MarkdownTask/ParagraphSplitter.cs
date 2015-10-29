@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarkdownTask
 {
@@ -15,7 +12,6 @@ namespace MarkdownTask
         {
             this.text = text;
             currentPosition = 0;
-            text.GetEnumerator().MoveNext();
         }
 
         public bool HasNextParagraph()
@@ -45,6 +41,12 @@ namespace MarkdownTask
             }
 
             return GetNextParagraphWithSeparator(paragraphStartPosition, currentPosition, currentPosition);
+        }
+
+        public IEnumerable<Tuple<string, string>> SplitOnParagraphsWithSeparators()
+        {
+            while (HasNextParagraph())
+                yield return GetNextParagraphWithSeparator();
         }
 
         private Tuple<string, string> GetNextParagraphWithSeparator (int paragraphStartPosition,

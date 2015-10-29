@@ -1,0 +1,17 @@
+This is test document.
+_We use single underlines
+between lines._
+_But not between paragraphs
+
+_this is new paragraph_
+We use __double underlines__ and
+_double underlines__in signle__undlines_
+
+'
+#include<cstdio>
+int main()
+{
+	printf("It's fine!\n");
+	return 0;
+}
+'
