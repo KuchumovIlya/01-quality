@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace MarkdownTask
 {
@@ -7,14 +8,17 @@ namespace MarkdownTask
     {
         static void Main(string[] args)
         {
-            var path = args[0];
-
-            using (var inputFile = File.OpenText(path))
+            if (args.Length < 2)
             {
-                var text = inputFile.ReadToEnd();
-                var markedText = MarkdownProcessor.Markdown(text);
-                Console.WriteLine(markedText);
+                Console.WriteLine("Usage: file_for_markdown file_for_result");
+                return;
             }
+
+            var inputPath = args[0];
+            var outputPath = args[1];
+            var text = File.ReadAllText(inputPath, Encoding.UTF8);
+            var markedText = MarkdownProcessor.Markdown(text);
+            File.WriteAllText(outputPath, markedText, Encoding.UTF8);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace MarkdownTask
 
     public class Token
     {
-        public TokenType TokenType;
-        public string TextValue;
+        public readonly TokenType TokenType;
+        public readonly string TextValue;
 
         public Token(TokenType tokenType, string textValue)
         {
@@ -59,6 +59,18 @@ namespace MarkdownTask
                     return new Token(TokenType.CloseStrong, TextValue);
             }
             throw new InvalidOperationException();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Token);
+        }
+
+        public bool Equals(Token other)
+        {
+            if (other == null)
+                return false;
+            return TokenType == other.TokenType && TextValue == other.TextValue;
         }
     }
 }

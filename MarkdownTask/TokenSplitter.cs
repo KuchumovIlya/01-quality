@@ -42,7 +42,7 @@ namespace MarkdownTask
             {
                 switch (text[currentPosition])
                 {
-                    case '\'':
+                    case '`':
                         yield return new Token(TokenType.Code, "'");
                         currentPosition++;
                         break;
@@ -67,6 +67,12 @@ namespace MarkdownTask
             }
         }
 
+        private static bool IsLetterOrDigitOnPosition(string text, int position)
+        {
+            return 0 <= position && position < text.Length &&
+                   (char.IsLetter(text[position]) || char.IsDigit(text[position]));
+        }
+
         private static Token ParseUnderlineToken(string text, int startPosition)
         {
             var endPosition = startPosition;
@@ -74,6 +80,8 @@ namespace MarkdownTask
                 endPosition++;
             var value = new string('_', endPosition - startPosition);
 
+            if (IsLetterOrDigitOnPosition(text, startPosition - 1) && IsLetterOrDigitOnPosition(text, endPosition))
+                return new Token(TokenType.Text, value);
             if (value == "_")
                 return new Token(TokenType.Em, value);
             if (value == "__")

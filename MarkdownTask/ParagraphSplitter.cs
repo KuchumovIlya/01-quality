@@ -33,14 +33,14 @@ namespace MarkdownTask
                 if (currentChar == '\n')
                 {
                     if (firstBreakLinePosition != -1)
-                        return GetNextParagraphWithSeparator(paragraphStartPosition, firstBreakLinePosition, currentPosition);
+                        return GetParagraphWithSeparator(paragraphStartPosition, firstBreakLinePosition, currentPosition);
                     firstBreakLinePosition = currentPosition - 1;
                 }
                 else if (currentChar != ' ')
                     firstBreakLinePosition = -1;
             }
 
-            return GetNextParagraphWithSeparator(paragraphStartPosition, currentPosition, currentPosition);
+            return GetParagraphWithSeparator(paragraphStartPosition, currentPosition, currentPosition);
         }
 
         public IEnumerable<Tuple<string, string>> SplitOnParagraphsWithSeparators()
@@ -49,7 +49,7 @@ namespace MarkdownTask
                 yield return GetNextParagraphWithSeparator();
         }
 
-        private Tuple<string, string> GetNextParagraphWithSeparator (int paragraphStartPosition,
+        private Tuple<string, string> GetParagraphWithSeparator (int paragraphStartPosition,
             int firstBreakLinePosition, int positionAfterSecondBreakLine)
         {
             var paragraphLength = firstBreakLinePosition - paragraphStartPosition;

@@ -36,7 +36,7 @@ namespace MarkdownTask
         [Test]
         public void MarkTextByCodeTag_BetweenSingleQuotes()
         {
-            var processedText = MarkdownProcessor.Markdown("'123'");
+            var processedText = MarkdownProcessor.Markdown("`123`");
             Assert.AreEqual(processedText, "<p><code>123</code></p>");
         }
 
@@ -57,14 +57,14 @@ namespace MarkdownTask
         [Test]
         public void UseBackslashAsEscapeCharacter_ForSelectionTags()
         {
-            var processedText = MarkdownProcessor.Markdown("\\'123\\'\\_123\\_\\_\\_123\\_\\_");
-            Assert.AreEqual(processedText, "<p>'123'_123___123__</p>");
+            var processedText = MarkdownProcessor.Markdown("\\`123\\`\\_123\\_\\_\\_123\\_\\_");
+            Assert.AreEqual(processedText, "<p>`123`_123___123__</p>");
         }
 
         [Test]
         public void UseBackslashAsEscapeCharacter_ForBackslash()
         {
-            var processedText = MarkdownProcessor.Markdown("\\\\'123'");
+            var processedText = MarkdownProcessor.Markdown("\\\\`123`");
             Assert.AreEqual(processedText, "<p>\\<code>123</code></p>");
         }
 
@@ -78,7 +78,7 @@ namespace MarkdownTask
         [Test]
         public void NotMergeNeighboursQuotes()
         {
-            var processedText = MarkdownProcessor.Markdown("''''");
+            var processedText = MarkdownProcessor.Markdown("````");
             Assert.AreEqual(processedText, "<p><code></code><code></code></p>");
         }
 
@@ -106,22 +106,22 @@ namespace MarkdownTask
         [Test]
         public void EscapeUnderline_BetweenQuotes()
         {
-            var processedText = MarkdownProcessor.Markdown("'_123_' '__123__'");
+            var processedText = MarkdownProcessor.Markdown("`_123_` `__123__`");
             Assert.AreEqual(processedText, "<p><code>_123_</code> <code>__123__</code></p>");
         }
 
         [Test]
         public void NotEscapeQuotes_BetweenUnderlines()
         {
-            var processedText = MarkdownProcessor.Markdown("_'123'_ __'123'__");
+            var processedText = MarkdownProcessor.Markdown("_`123`_ __`123`__");
             Assert.AreEqual(processedText, "<p><em><code>123</code></em> <strong><code>123</code></strong></p>");
         }
 
         [Test]
         public void NotEscapeDoubleUnderlines_BetweenSingleUnderlines()
         {
-            var processedText = MarkdownProcessor.Markdown("_a__123__a_");
-            Assert.AreEqual(processedText, "<p><em>a<strong>123</strong>a</em></p>");
+            var processedText = MarkdownProcessor.Markdown("_ a __ 123 __ a _");
+            Assert.AreEqual(processedText, "<p><em> a <strong> 123 </strong> a </em></p>");
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace MarkdownTask
         [Test]
         public void EscapeNotPairQuote()
         {
-            var processedText = MarkdownProcessor.Markdown("'123");
+            var processedText = MarkdownProcessor.Markdown("`123");
             Assert.AreEqual(processedText, "<p>'123</p>");
         }
 
@@ -148,7 +148,7 @@ namespace MarkdownTask
         [Test]
         public void GreedySplitOnPairs()
         {
-            var processedText = MarkdownProcessor.Markdown("_1'2_'");
+            var processedText = MarkdownProcessor.Markdown("_1`2_`");
             Assert.AreEqual(processedText, "<p><em>1'2</em>'</p>");
         }
 
@@ -157,6 +157,20 @@ namespace MarkdownTask
         {
             var processedText = MarkdownProcessor.Markdown("_1\n\n2_");
             Assert.AreEqual(processedText, "<p>_1</p>\n\n<p>2_</p>");
+        }
+
+        [Test]
+        public void EscapeUnderlines_BetweenDigitsOrLetters()
+        {
+            var processedText = MarkdownProcessor.Markdown("1_a__123__a_1");
+            Assert.AreEqual(processedText, "<p>1_a__123__a_1</p>");
+        }
+
+        [Test]
+        public void ReplaceHtmlSignsByNames()
+        {
+            var processedText = MarkdownProcessor.Markdown("<tag>");
+            Assert.AreEqual(processedText, "<p>&lt;tag&gt;</p>");
         }
     }
 }

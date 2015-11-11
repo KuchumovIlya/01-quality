@@ -8,6 +8,8 @@ namespace MarkdownTask
         public static string Markdown(string text)
         {
             text = text.Replace("\r\n", "\n");
+            text = text.Replace("<", "&lt;");
+            text = text.Replace(">", "&gt;");
             var paragraphsWithSeparators = new ParagraphSplitter(text).SplitOnParagraphsWithSeparators();
             return string.Join("", paragraphsWithSeparators.Select(MarkdownParagraph));
         }

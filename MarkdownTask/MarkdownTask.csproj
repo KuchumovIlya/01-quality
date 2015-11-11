@@ -48,10 +48,12 @@
     <Compile Include="MarkdownProcessor.cs" />
     <Compile Include="MarkdownProcessor_should.cs" />
     <Compile Include="ParagraphSplitter.cs" />
+    <Compile Include="ParagraphSplitter_Should.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="TokenSplitter.cs" />
+    <Compile Include="TokenSplitter_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
